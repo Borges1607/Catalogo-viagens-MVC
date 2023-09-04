@@ -1,0 +1,17 @@
+<h1>Menu</h1>
+<ul action="/catalogo" class="menu">
+    <% viagens.forEach(viagem => %>
+        <div>
+            <div id="img">
+                <img src="<%= viagem.url %> " alt="Imagem de <%= viagem.destino %>">
+            </div>
+            <div id="info">
+                <h2> <%- viagem.destino %> </h2>
+                <p> <%- viagem.datachegada %> </p>
+                <p> <%- viagem.datasaida %> </p>
+                <p> <%- viagem.descricao %> </p>
+                <p> <%- viagem.preco %> </p>
+            </div>
+        </div>
+    )
+</ul>
