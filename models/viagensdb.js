@@ -1,29 +1,31 @@
 
 class Viagens {
-async listarViagens(){
-    return viagensdb;
-}
-async adicionarViagem(){
-    const novoViagem ={
-        id :viagensdb.length + 1 ,
-        destino: destino,
-        url: url,
-        datasaida: datasaida,
-        datachegada: datachegada,
-        preco: preco,
-        descricao: descricao
+    constructor(id, destino, url, datachegada, datasaida, preco, descricao){
+        this.id = id;
+        this.destino = destino;
+        this.url = url;
+        this.datachegada = datachegada;
+        this.datasaida = datasaida;
+        this.preco = preco;
+        this.descricao = descricao;
     }
-    viagensdb.push(novoViagem)
-    return novoViagem;
-}
-async deletarViagem(id){
-    const index = viagensdb.findIndex(viagem => viagem.id === id);//isso é um sistema parecido com um "for" para verificar se o id fornecido está no banco de dados, e se não tiver, retorna '-1'
-    if(index !== -1){
-        viagensdb.splice(index, 1);
-        return true; //viagem deletada
+
+    async listarViagens(){
+        const db= require('./db');
+        return await db.query("SELECT * FROM viagem");   
     }
-    return false;//viagem não encontrada
-}
+    async adicionarViagem(){
+        const db= require('./db');
+        let resp = db.query(`INSERT INTO viagem (destino, url, datachegada, datasaida, preco, descricao) VALUES ('${this.destino}','${this.url}','${this.datachegada}','${this.datasaida}','${this.preco}','${this.descricao}')`);
+    }
+    async deletarViagem(id){
+        const db = require('./db');
+        if(await db.query("DELETE FROM viagem WHERE id_usuario" = id_usuario)){
+            return true; //viagem deletada
+        }else{
+            return false;//viagem não encontrada
+        }
+    }
 }
 
 module.exports= Viagens;

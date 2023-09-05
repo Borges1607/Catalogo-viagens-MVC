@@ -1,8 +1,7 @@
 const express = require("express");
-//const ejs = require("ejs");
-const express_ejs = require("express-ejs-layouts");
+const path = require('path');
+const expressLayouts = require("express-ejs-layouts");
 const session = require("express-session");
-const path = require("path");
 
 const viagensController = require("./controller/viagensController");
 const usuarioController = require("./controller/usuarioController");
@@ -12,6 +11,7 @@ const port = 5000;
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(session({resave:true,saveUninitialized:true, secret:'1'}));
+app.use(expressLayouts);
 app.set("layout", "./layouts/defaul/index");
 app.set("views engine", "ejs");
 
@@ -51,18 +51,19 @@ app.get("/", (req, res) => {
 });
 app.get("/login", (req,res) =>{
     app.set('layout', './layouts/default/login')
+    usuarioController.login(req, res);
 });
 app.post('/login', (req, res) =>{
-    usuarioController.autenticar(req,res)
-})
+    usuarioController.autenticar(req,res);
+});
 app.get('/catalogo/delete/:id', (req, res)=>{
-    viagensController.deleteViagem(req,res)
-})
-app.get('/viagens', viagensController.getViagens)
-app.post('/viagem', viagensController.addViagem)
-app.delete('/viagem/:id', viagensController.deleteViagem)
-app.put('/viagem/:id', viagensController.updateViagem)
+    viagensController.deleteViagem(req,res);
+});
+app.get('/viagens', viagensController.getViagens);
+app.post('/viagem', viagensController.addViagem);
+app.delete('/viagem/:id', viagensController.deleteViagem);
+app.put('/viagem/:id', viagensController.updateViagem);
 
 app.listen(port, () =>{
-    console.log(`Servidor rodando na porta ${port}`)
-})
+    console.log(`Servidor rodando na porta ${port}`);
+});
