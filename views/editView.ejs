@@ -1,43 +1,45 @@
-<h2 class="text-center">Editar Viagem</h2>
-<form method="POST" class="d-flex flex-column align-items-center gap-4">
-    <input type="hidden" name="id" value="<%= viagem.idViagem %>" />
+<div style="background-color: #a8fdd7;">
+    <h2 class="text-center">Editar Viagem</h2>
+    <form method="POST" class="d-flex flex-column align-items-center gap-4">
+        <input type="hidden" class="form-control" name="id" value="<%= viagem.idViagem %>" />
 
-    <div class="d-flex flex-column w-50">
-        <label for="destino">Destino da viagem:</label>
-        <input type="text" name="destino" value="<%= viagem.destino %>" />
+        <div class="d-flex flex-column w-50">
+            <label for="destino">Destino da viagem:</label>
+            <input type="text" class="form-control" name="destino" value="<%= viagem.destino %>" />
+        </div>
+
+        <div class="d-flex flex-column w-50">
+            <label for="datasaida">Data de saida da viagem:</label>
+            <input type="date" class="form-control" name="datasaida" value="<%= viagem.datasaida %>" />
+        </div>
+
+        <div class="d-flex flex-column w-50">
+            <label for="datachegada">Data de chegada da viagem:</label>
+            <input type="date" class="form-control" name="datachegada" value="<%= viagem.datachegada %>" />
+        </div>
+
+        <div class="d-flex flex-column w-50">
+            <label for="descricao">descrição viagem:</label>
+            <textarea name="descricao" class="form-control" cols="30" rows="10" style="resize: none"><%= viagem.descricao %></textarea>
+        </div>
+
+        <div class="d-flex flex-column w-50">
+            <label for="preco">Preço da viagem:</label>
+            <input type="text"  class="form-control" name="preco" value="<%= viagem.preco %>" />
+        </div>
+
+        <div class="d-flex flex-column w-50">
+            <label for="url">Url da imagem da viagem:</label>
+            <input type="text"  class="form-control" name="url" value="<%= viagem.url %>" />
+        </div>
+
+        <button type="submit" formaction="/viagem/update" class="btn btn-success px-5">
+            Salvar
+        </button>
+    </form>
+    <div class="d-flex flex-column align-items-center">
+        <a class="text-decoration-none mt-3" href="/viagens">
+            <button class="btn btn-dark px-5">Voltar</button>
+        </a>
     </div>
-
-    <div class="d-flex flex-column w-50">
-        <label for="datasaida">Data de saida da viagem:</label>
-        <input type="date" name="datasaida" value="<%= viagem.datasaida %>" />
-    </div>
-
-    <div class="d-flex flex-column w-50">
-        <label for="datachegada">Data de chegada da viagem:</label>
-        <input type="date" name="datachegada" value="<%= viagem.datachegada %>" />
-    </div>
-
-    <div class="d-flex flex-column w-50">
-        <label for="descricao">descrição viagem:</label>
-        <textarea name="descricao" cols="30" rows="10" style="resize: none"><%= viagem.descricao %></textarea>
-    </div>
-
-    <div class="d-flex flex-column w-50">
-        <label for="preco">Preço da viagem:</label>
-        <input type="text" name="preco" value="<%= viagem.preco %>" />
-    </div>
-
-    <div class="d-flex flex-column w-50">
-        <label for="url">Url da imagem da viagem:</label>
-        <input type="text" name="url" value="<%= viagem.url %>" />
-    </div>
-
-    <button type="submit" formaction="/viagem/update" class="btn btn-success px-5">
-        Salvar
-    </button>
-</form>
-<div class="d-flex flex-column align-items-center">
-    <a class="text-decoration-none mt-3" href="/viagens">
-        <button class="btn btn-dark px-5">Voltar</button>
-    </a>
 </div>

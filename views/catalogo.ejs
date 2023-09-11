@@ -1,48 +1,70 @@
 <div>
-    <h1>Nova viagem</h1>
-    </ul> 
-    <form action="/viagem" method="POST"> 
-        <input type="text" name="destino" placeholder="Destino"> 
-        <input type="text" name="url" id="" placeholder="Url da Imagem">
-        <input type="date" name="datasaida" id="" placeholder="Data da saida">
-        <input type="date" name="datachegada" id="" placeholder="Data da chegada">
-        <input type="text" name="descricao" placeholder="descrição">
-        <input type="text" name="preco" placeholder="Preço">
-        <button type="submit">Adicionar</button> 
-    </form> 
-</div>
-<div>
-    <h1>Menu</h1>
-    <ul class="menu">
-        <% viagens.forEach((viagem) => { %>
-            <div>
-                <div id="img">
-                    <img src="<%= viagem.url %> " alt="Imagem de <%= viagem.destino %>">
-                </div>
-                <div id="info">
-                    <h2> <%= viagem.destino %> </h2>
-                    <p> <%= viagem.datachegada %> </p>
-                    <p> <%= viagem.datasaida %> </p>
-                    <p> <%= viagem.descricao %> </p>
-                    <p> <%= viagem.preco %> </p>
-                </div>
-                <div class="d-flex">
-                    <form method="POST" action="/viagem/delete" class="me-2">
-                        <input
-                            type="hidden"
-                            name="id"
-                            value="<%= viagem.idViagem %>"
-                        />
-                        <button type="submit" class="btn p-0">
-                            <i class="bi bi-trash3 h3 text-danger"></i>
-                        </button>
-                    </form>
-                    <a
-                        href="/viagem/editar/<%= viagem.idViagem %>">
-                        <i class="bi bi-pencil-square h3 text-black"></i
-                    ></a>
-                </div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="text-center">Nova viagem</h1>
+                <form action="/viagem" method="POST">  
+                    <div class="form-group">
+                        <label for="destino">Destino</label>
+                        <input type="text" class="form-control" name="destino" id="destino" placeholder="Destino" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="url">Url</label>
+                        <input type="text" class="form-control" name="url" id="url" placeholder="Url da imagem" required>  
+                    </div>
+                    <div class="form-group">
+                        <label for="datasaida">Data da Saida</label>
+                        <input type="date" class="form-control" name="datasaida" id="datasaida" placeholder="Data da Saida" required>  
+                    </div>
+                    <div class="form-group">
+                        <label for="datachegada">Data da chegada</label>
+                        <input type="date" class="form-control" name="datachegada" id="datachegada" placeholder="Data da chegada" required>  
+                    </div>
+                    <div class="form-group">
+                        <label for="descricao">Descrição</label>
+                        <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Descrição" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="preco">Preço</label>
+                        <input type="text" class="form-control" name="preco" id="preco" placeholder="Preço" required>
+                    </div>
+                    <div class="form-group text-center" style="margin-top: 2vh;">
+                        <button type="submit" class="btn btn-primary" name="login">Adicionar</button>
+                    </div>
+                </form> 
             </div>
+        </div>
+    </div>
+</div>
+<h1 class="text-center" style="margin-top: 3vh; margin-bottom: 2vh;">Menu</h1>
+<div class="container" style="background-color: rgb(193, 255, 235);">
+    <ul class="list-unstyled">
+        <% viagens.forEach((viagem) => { %>
+            <li class="mb-4">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img style="border-radius: 2%;" class="img-fluid" src="<%= viagem.url %>" alt="Imagem de <%= viagem.destino %>">
+                    </div>
+                    <div class="col-md-8">
+                        <h2><%= viagem.destino %></h2>
+                        <p>Data de Saída: <%= viagem.datasaida %></p>
+                        <p>Data de Chegada: <%= viagem.datachegada %></p>
+                        <p><%= viagem.descricao %></p>
+                        <p>Preço:R$ <%= viagem.preco %>,00</p>
+                        <div class="d-flex justify-content-end mt-3">
+                            <form method="POST" action="/viagem/delete" class="me-2">
+                                <input type="hidden" name="id" value="<%= viagem.idViagem %>">
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="bi bi-trash"></i> Excluir
+                                </button>
+                            </form>
+                            <a href="/viagem/editar/<%= viagem.idViagem %>" class="btn btn-primary">
+                                <i class="bi bi-pencil"></i> Editar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
         <% }); %>
     </ul>
 </div>
