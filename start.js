@@ -12,16 +12,16 @@ const port = 5000;
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(session({resave:true,saveUninitialized:true, secret:'1'}));
 app.use(expressLayouts);
-app.set("layout", "./layouts/defaul/index");
-app.set("views engine", "ejs");
+app.set("layout", "./layouts/default/index");
+app.set("view engine", "ejs");
 
 app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
   if (!req.session.usuario) {
-    if (req.originalUrl == "/login" || req.originalUrl == "/autenticar") {
-      app.set("layout", "./layout/default/login");
-      res.locals.layoutsVariables = {
+    if (req.originalUrl == "/login" || req.originalUrl == "/cadastro") {
+      app.set("layout", "./layouts/default/login");
+      res.locals.layoutVariables = {
         url: process.env.URL,
         img: "/img/",
         style: "/css/",
@@ -34,35 +34,30 @@ app.use((req, res, next) => {
     }
   } else {
     app.set("layout", "./layouts/default/index");
-    res.locals.layoutsVariables = {
+    res.locals.layoutVariables = {
       url: process.env.URL,
       img: "/img/",
       style: "/css/",
       title: "catálogo",
       usuario: req.session.usuario,
     };
-    next();//continua para prox. etapa(rota ou middleware)
+    next();
   }
 });
 
 //rotas
-app.get("/", (req, res) => {
-  res.render("home");
-});
-app.get("/login", (req,res) =>{
-    app.set('layout', './layouts/default/login')
-    usuarioController.login(req, res);
-});
-app.post('/login', (req, res) =>{
-    usuarioController.autenticar(req,res);
-});
-app.get('/catalogo/delete/:id', (req, res)=>{
-    viagensController.deleteViagem(req,res);
-});
+app.get("/login", (_req,res) => res.render("loginView"));
+app.post('/login', usuarioController.autenticar);
+
+app.get('/cadastro',(_req,res) => res.render("cadastro"));
+app.post('/cadastro', usuarioController.cadastrarUsuario);
+
 app.get('/viagens', viagensController.getViagens);
 app.post('/viagem', viagensController.addViagem);
-app.delete('/viagem/:id', viagensController.deleteViagem);
-app.put('/viagem/:id', viagensController.updateViagem);
+
+app.post('/viagem/delete', viagensController.deleteViagem);
+app.get('/viagem/editar/:id(\\d+)', viagensController.editViagem);
+app.post('/viagem/update', viagensController.updateViagem)
 
 app.listen(port, () =>{
     console.log(`Servidor rodando na porta ${port}`);

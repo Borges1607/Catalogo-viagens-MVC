@@ -1,31 +1,32 @@
 
-class Viagens {
-    constructor(id, destino, url, datachegada, datasaida, preco, descricao){
-        this.id = id;
+const db= require('./db');
+
+class Viagem {
+    constructor(destino, datasaida, datachegada, descricao, preco, url){
         this.destino = destino;
-        this.url = url;
+        this.datasaida = datasaida; 
         this.datachegada = datachegada;
-        this.datasaida = datasaida;
-        this.preco = preco;
         this.descricao = descricao;
+        this.preco = preco;
+        this.url = url;
     }
 
-    async listarViagens(){
-        const db= require('./db');
-        return await db.query("SELECT * FROM viagem");   
+    static async listarViagens(){
+        return await db.query(`SELECT * FROM viagem;`);   
     }
-    async adicionarViagem(){
-        const db= require('./db');
-        let resp = db.query(`INSERT INTO viagem (destino, url, datachegada, datasaida, preco, descricao) VALUES ('${this.destino}','${this.url}','${this.datachegada}','${this.datasaida}','${this.preco}','${this.descricao}')`);
+    static async verViagem(id){
+        console.log(id);
+        return await db.query(`SELECT * FROM viagem where idViagem = ${id}`);
     }
-    async deletarViagem(id){
-        const db = require('./db');
-        if(await db.query("DELETE FROM viagem WHERE id_usuario" = id_usuario)){
-            return true; //viagem deletada
-        }else{
-            return false;//viagem não encontrada
-        }
+    static async adicionarViagem(viagem){
+       return await db.query(`INSERT INTO viagem (destino, url, datachegada, datasaida, preco, descricao) VALUES ('${viagem.destino}','${viagem.url}','${viagem.datachegada}','${viagem.datasaida}','${viagem.preco}','${viagem.descricao}');`);
+    }
+    static async deletarViagem(id){
+        return await db.query(`DELETE FROM viagem WHERE idViagem = ${id};`);
+    }
+    static async update(viagem,id){
+        return await db.query(`UPDATE viagem SET destino = '${viagem.destino}', datasaida = '${viagem.datasaida}', datachegada = '${viagem.datachegada}', preco = '${viagem.preco}', descricao = '${viagem.descricao}', url = '${viagem.url}' WHERE idViagem = ${id};`);
     }
 }
 
-module.exports= Viagens;
+module.exports= Viagem;

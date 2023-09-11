@@ -1,36 +1,36 @@
-const ViagensBD = require('../models/viagensdb');
-let viagens = []
+const Viagem = require('../models/viagensdb');
 
-class ViagemController {
-    async getViagens (req, res) {
-        viagens = await ViagensBD.listarViagens();
-        res.render('viagens', {viagens})
-    }
-    async addViagem(req, res){
-        const { destino } = req.body;
+async function getViagens (req, res) {
+    const viagens = await Viagem.listarViagens();
+    // console.log(viagens);
+    return res.render('catalogo', {viagens});
+}
+async function addViagem(req, res){
+    const { destino, datasaida, datachegada, descricao, preco, url } = req.body;
+    console.log(req.body);
+    const viagem = new Viagem(destino, datasaida, datachegada, descricao, preco, url);
+    console.log(viagem);
+    Viagem.adicionarViagem(viagem);
+    res.redirect('/viagens');
+}
+async function deleteViagem(req, res){
+    const {id} = req.body;
+    Viagem.deletarViagem(id);
+    res.redirect('/viagens');
+}
 
-        const viagem = new ViagensBD(destino, url, datasaida, datachegada, descricao, preco);
-        viagem.novoViagem();
-        viagens.push(viagem);
-        res.render('/catalogo');
-    }
-    async deleteViagem(req, res){
-    }
-    async updateViagem(req, res){
-        const{destino, url, datasaida,datachegada, descricao, preco } = req.body;
-        tarefas = tarefas.map(tarefa =>{
-            if(tarefa._id == id ){
-                tarefa.destino = destino;
-                tarefa.url = url;
-                tarefa.datasaida = datasaida;
-                tarefa.datachegada = datachegada;
-                tarefa.descricao = descricao;
-                tarefa.preco = preco;
-            }
-            return tarefa;
-        })
-        res.redirect('/catalogo')
-    }
-}    
+async function editViagem(req, res){
+    const {id} = req.params; 
+    const viagem = await Viagem.verViagem(id);
+    return res.render('editView', { viagem: viagem[0] });
+}
 
-module.exports = ViagemController;
+
+async function updateViagem(req, res){
+    const{id, destino, datasaida, datachegada, descricao, preco, url } = req.body;
+    const viagem = new Viagem(destino, datasaida, datachegada, descricao, preco, url);
+    Viagem.update(viagem,id);
+    res.redirect('/viagens');
+
+}
+module.exports = {getViagens,addViagem,deleteViagem,updateViagem,editViagem};

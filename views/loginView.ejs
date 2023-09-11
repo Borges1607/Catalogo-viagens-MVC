@@ -1,12 +1,9 @@
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <h1 class="text-center">Criar Conta</h1>
-            <form action="/cadastro" method="post">
-                <div class="form-group">
-                    <label for="nome">Nome</label>
-                    <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" required>
-                </div>
+            <h1 class="text-center">Login</h1>
+            <form action="/login" method="post">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
@@ -16,10 +13,10 @@
                     <input type="password" class="form-control" name="senha" id="password" placeholder="Senha" required>  
                 </div>
                 <div class="form-group text-center" style="margin-top: 2vh;">
-                    <button type="submit" class="btn btn-primary">Cadastrar-se</button>
+                    <button type="submit" class="btn btn-primary" name="login">Login</button>
                 </div>
             </form>
-            <p class="text-center" style="margin-top: 2vh;"><a href="/login" style="color: #000; text-decoration: none;">Fazer login</a></p>
+            <p class="text-center" style="margin-top: 2vh;"><a href="/cadastro" style="color: #000; text-decoration: none;">Cadastrar-se</a></p>
         </div>
     </div>
 </div>
